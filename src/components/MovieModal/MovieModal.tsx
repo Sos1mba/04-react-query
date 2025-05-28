@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import  { createPortal } from "react-dom";
 import type { Movie } from '../../types/movie';
 import styles from './MovieModal.module.css';
 
@@ -8,32 +9,34 @@ interface MovieModalProps {
 }
 
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
+   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains(styles.backdrop)) {
-        onClose();
-      }
-    };
+   useEffect(() => {
+	const handleKeyDown = (e: KeyboardEvent) => {
+	  if (e.key === "Escape") {
+	    onClose();
+	  }
+	};
+	
+	document.addEventListener("keydown", handleKeyDown);
+	document.body.style.overflow = "hidden";
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('click', handleClickOutside);
-    document.body.style.overflow = 'hidden';
+	return () => {
+	  document.removeEventListener("keydown", handleKeyDown);
+	  document.body.style.overflow = "";
+	};
+}, [onClose]);
+  
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('click', handleClickOutside);
-      document.body.style.overflow = '';
-    };
-  }, [onClose]);
-
-  return (
-    <div className={styles.backdrop} role="dialog" aria-modal="true">
+  return createPortal (
+    <div className={styles.backdrop} 
+    role="dialog" 
+    aria-modal="true" 
+    onClick={handleBackdropClick}>
       <div className={styles.modal}>
         <button
           className={styles.closeButton}
@@ -58,6 +61,7 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
           </p>
         </div>
       </div>
-    </div>
+    </div>,
+     document.body
   );
 }
