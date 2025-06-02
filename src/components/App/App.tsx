@@ -73,7 +73,7 @@ export default function App() {
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
           onPageChange={handlePageChange}
-          forcePage={page - 1} // ReactPaginate використовує 0-based index
+          forcePage={page - 1} 
           containerClassName={styles.pagination}
           activeClassName={styles.active}
           nextLabel="→"
@@ -96,70 +96,3 @@ export default function App() {
 }
 
 
-// export default function App() {
-//   const [movies, setMovies] = useState<Movie[]>([]);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(false);
-//   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-//   const [page, setPage] = useState<number>(1);
-//   const [totalPages, setTotalPages] = useState<number>(0);
-
-//   const handleSearch = async (query: string) => {
-//     setLoading(true);
-//     setError(false);
-//     setMovies([]); 
-//     setPage(1);
-
-//      try {
-     
-//       const { results, total_pages } = await fetchMovies(query, page); 
-
-//       if (results.length === 0) {
-//         toast.error('No movies found for your request.');
-//       }
-//       setMovies(results);
-//        setTotalPages(total_pages); 
-//       setMovies(results);
-//     } catch {
-//       setError(true);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleSelect = (movie: Movie) => {
-//     setSelectedMovie(movie);
-//   };
-
-//   const handleCloseModal = () => {
-//     setSelectedMovie(null);
-//   };
-
-//   return (
-//     <>
-//       <Toaster position="top-right" />
-//       <SearchBar onSubmit={handleSearch} />
-//       {loading && <Loader />}
-//       {error && <ErrorMessage />}
-//       {!loading && !error && movies.length > 0 && (
-//         <MovieGrid movies={movies} onSelect={handleSelect} />
-//       )}
-//       {selectedMovie && (
-//         <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
-//       )}
-//       {data.total_pages > 1 && (
-//         <ReactPaginate
-//           pageCount={data.total_pages}
-//           pageRangeDisplayed={5}
-//           marginPagesDisplayed={1}
-//           onPageChange={({ selected }) => setPage(selected + 1)}
-//           forcePage={page - 1}
-//           containerClassName={css.pagination}
-//           activeClassName={css.active}
-//           nextLabel="→"
-//           previousLabel="←"
-//         />
-//       )}
-//     </>
-//   );
-// }
