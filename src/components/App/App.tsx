@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { useState, useEffect } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import MovieModal from '../MovieModal/MovieModal';
@@ -30,6 +30,11 @@ export default function App() {
   });
   const movies: Movie[] = data?.results || [];
   const totalPages: number = data?.total_pages || 0; 
+
+  useEffect(() => {
+  if (!isLoading && !isFetching && !isError && movies.length === 0 && searchQuery) {
+    toast.error(`На жаль, за запитом "${searchQuery}" нічого не знайдено.`);
+  }}, [movies.length, searchQuery, isLoading, isError, isFetching]);
 
  
   const handleSearchSubmit = (query: string) => {
@@ -62,14 +67,12 @@ export default function App() {
        {error && <ErrorMessage />}
       
      
-      {!isLoading && !isFetching && !isError && movies.length === 0 && searchQuery && (
-        <p className={styles.noResultsMessage}>На жаль, за вашим запитом "{searchQuery}" нічого не знайдено.</p>
-      )}
+     
 
       
       {totalPages > 1 && searchQuery && (
         <ReactPaginate
-          pageCount={totalPages}
+          pageCount={totalPages} 
           pageRangeDisplayed={5}
           marginPagesDisplayed={1}
           onPageChange={handlePageChange}
