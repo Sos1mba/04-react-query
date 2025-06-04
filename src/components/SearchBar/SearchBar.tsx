@@ -14,7 +14,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
       return;
     }
 
-    onSubmit(query.trim()); // передаём очищенную строку родителю
+    onSubmit(query.trim());
   };
 
   return (
@@ -28,7 +28,7 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
         >
           Powered by TMDB
         </a>
-        {/* Привязка handleSubmit к форме через Form Actions */}
+       
         <form className={styles.form} action={handleSubmit}>
           <input
             className={styles.input}

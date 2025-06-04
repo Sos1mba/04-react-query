@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
-import type { MovieResponse } from '../../types/movie';
+import type { MovieResponse } from '../../services/movieService';
 import { useQuery,  keepPreviousData } from '@tanstack/react-query';
 import ReactPaginate from 'react-paginate';
 import styles from './App.module.css';
